@@ -1,6 +1,6 @@
 {
   "name": "typed-vector",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "2D Vectors in typescript",
   "main": "lib/Vector.js",
   "types": "lib/Vector.d.ts",
