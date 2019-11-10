@@ -9,5 +9,5 @@ describe('Vector', () => {
     const vector = new Vector(5, 4);
 
     expect(vector).toEqual({ x: 5, y: 4 });
-  })
+  });
 });

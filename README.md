@@ -30,3 +30,10 @@ const a = new Vector(1, 2);
 const b = new Vector(5, 5);
 a.add(b); // x: 6, y: 7
 `````
+
+#### .addX(number): Vector
+Mutates self by adding x.
+`````ts
+const vector = new Vector(2, 5);
+vector.addX(1); // x: 3, y: 5
+`````

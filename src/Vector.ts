@@ -12,4 +12,9 @@ export default class Vector {
     this.y += y;
     return this;
   }
+
+  public addX(x: number): Vector {
+    this.x += x;
+    return this;
+  }
 }
