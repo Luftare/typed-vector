@@ -7,7 +7,7 @@ export default class Vector {
     this.y = y;
   }
 
-  add({ x, y }: Vector): Vector {
+  public add({ x, y }: Vector): Vector {
     this.x += x;
     this.y += y;
     return this;
