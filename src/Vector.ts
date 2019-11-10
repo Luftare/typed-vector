@@ -6,4 +6,10 @@ export default class Vector {
     this.x = x;
     this.y = y;
   }
+
+  add({ x, y }: Vector): Vector {
+    this.x += x;
+    this.y += y;
+    return this;
+  }
 }
