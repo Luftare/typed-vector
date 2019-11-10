@@ -37,3 +37,10 @@ Mutates self by adding x.
 const vector = new Vector(2, 5);
 vector.addX(1); // x: 3, y: 5
 `````
+
+#### .addY(number): Vector
+Mutates self by adding y.
+`````ts
+const vector = new Vector(2, 5);
+vector.addY(1); // x: 2, y: 6
+`````

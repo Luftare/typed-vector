@@ -22,5 +22,14 @@ describe('Vector methods', () => {
 
     expect(vector).toEqual(v(6, 2));
     expect(returnValue).toBe(vector);
+  });
+
+  it('addY', () => {
+    const vector = new Vector(1, 2);
+
+    const returnValue = vector.addY(5);
+
+    expect(vector).toEqual(v(1, 7));
+    expect(returnValue).toBe(vector);
   })
 });
