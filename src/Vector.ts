@@ -1,9 +1,9 @@
-export interface Point {
+export interface IVector {
   x: number;
   y: number;
 }
 
-export default class Vector implements Point {
+export default class Vector implements IVector {
   public x: number = 0;
   public y: number = 0;
 
@@ -12,8 +12,8 @@ export default class Vector implements Point {
     this.y = y;
   }
 
-  public add(...vectors: Point[]): Vector {
-    return vectors.reduce((result: Vector, { x, y }: Point) => {
+  public add(...vectors: IVector[]): Vector {
+    return vectors.reduce((result: Vector, { x, y }: IVector) => {
       result.x += x;
       result.y += y;
       return result;
@@ -30,8 +30,8 @@ export default class Vector implements Point {
     return this;
   }
 
-  public subtract(...vectors: Point[]): Vector {
-    return vectors.reduce((result: Vector, { x, y }: Point) => {
+  public subtract(...vectors: IVector[]): Vector {
+    return vectors.reduce((result: Vector, { x, y }: IVector) => {
       result.x -= x;
       result.y -= y;
       return result;
@@ -44,19 +44,19 @@ export default class Vector implements Point {
     return this;
   }
 
-  public scaledAdd(s: number, ...vectors: Point[]): Vector {
-    return vectors.reduce((result: Vector, { x, y }: Point) => {
+  public scaledAdd(s: number, ...vectors: IVector[]): Vector {
+    return vectors.reduce((result: Vector, { x, y }: IVector) => {
       result.x += x * s;
       result.y += y * s;
       return result;
     }, this);
   }
 
-  public dot({ x, y }: Point): number {
+  public dot({ x, y }: IVector): number {
     return this.x * x + this.y * y;
   }
 
-  public cross({ x, y }: Point): number {
+  public cross({ x, y }: IVector): number {
     return this.x * y - this.y * x;
   }
 }
