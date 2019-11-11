@@ -4,26 +4,17 @@ It's a 2d vector library written in typescript.
 
 ## API
 
-### Properties
+#### [IVector { x: number, y: number}](#interface)
 
-#### x: number
-
-#### y: number
-
-### Constructors
-
-#### [Vector()](#vector)
-`````ts
-const vector = new Vector(); // x: 0, y: 0
-`````
 #### [Vector(number, number)](#vector-n-n)
 `````ts
-const vector = new Vector(1, 2);
+const vector = new Vector(1, 2); // x: 1, y: 2
+const other = new Vector(); // x: 0, y: 0
 `````
 
 ### Methods
 
-#### [add(...Point[]): Vector](#vector-v)
+#### [add(...IVector[]): Vector](#vector-v)
 Mutates self by adding other vector(s).
 `````ts
 const a = new Vector(1, 2);
@@ -45,7 +36,7 @@ const vector = new Vector(2, 5);
 vector.addY(1); // x: 2, y: 6
 `````
 
-#### [subtract(...Point[]): Vector](#subtract)
+#### [subtract(...IVector[]): Vector](#subtract)
 Mutates self by subtracting other vector(s).
 `````ts
 const a = new Vector(5, 4);
@@ -60,7 +51,7 @@ const vector = new Vector(1, 2);
 vector.scale(5); // x: 5, y: 10
 `````
 
-#### [scaledAdd(number, ...Point[]): Vector](#scaledadd)
+#### [scaledAdd(number, ...IVector[]): Vector](#scaledadd)
 Mutates self by adding other vector multiplied by given multiplier.
 `````ts
 const a = new Vector(1, 1);
@@ -69,7 +60,7 @@ a.scaledAdd(2, b); // x: 7, y: 7
 b; // x: 3, y: 3
 `````
 
-#### [dot(Point): number](#dot)
+#### [dot(IVector): number](#dot)
 A dot product of self and other vector.
 `````ts
 const a = new Vector(1, 2);
@@ -77,7 +68,7 @@ const b = new Vector(3, 4);
 a.dot(b); // 11
 `````
 
-#### [cross(Point): number](#cross)
+#### [cross(IVector): number](#cross)
 A cross product of self and other vector.
 `````ts
 const a = new Vector(5, 3);
