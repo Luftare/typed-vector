@@ -60,7 +60,7 @@ export class Vector implements IVector {
     }, this);
   }
 
-  normalize(): Vector {
+  public normalize(): Vector {
     const length = this.getLength();
     if (length === 0) {
       return this;
