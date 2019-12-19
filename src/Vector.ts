@@ -12,12 +12,42 @@ export class Vector implements IVector {
     this.y = y;
   }
 
+  public getLengthSq(): number {
+    return (this.x ** 2 + this.y ** 2);
+  }
+
   public getLength(): number {
-    return (this.x ** 2 + this.y ** 2) ** 0.5;
+    return this.getLengthSq() ** 0.5;
   }
 
   public getAngle(): number {
     return (this.x < 0 ? Math.PI : 0) + Math.atan(this.y / this.x);
+  }
+
+  public set(x: number, y: number): Vector {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  public setX(x: number): Vector {
+    this.x = x;
+    return this;
+  }
+
+  public setY(y: number): Vector {
+    this.y = y;
+    return this;
+  }
+
+  public copy({ x, y }: IVector): Vector {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  public clone(): Vector {
+    return new Vector(this.x, this.y);
   }
 
   public add(...vectors: IVector[]): Vector {

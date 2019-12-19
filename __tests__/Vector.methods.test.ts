@@ -1,25 +1,55 @@
 import { Vector, IVector } from '../src/Vector';
 
-function v(x: number, y: number): { x: number, y: number } {
-  return { x, y };
-}
+const PRECISENESS = 5;
 
-function vectorIs(vector: IVector, x: number, y: number) {
-  expect(vector.x).toBeCloseTo(x, 5);
-  expect(vector.y).toBeCloseTo(y, 5);
+function expectVector(vector: IVector, x: number, y: number) {
+  expect(vector.x).toBeCloseTo(x, PRECISENESS);
+  expect(vector.y).toBeCloseTo(y, PRECISENESS);
 }
 
 describe('Vector methods', () => {
+  it('set', () => {
+    const vector = new Vector(5, 4);
+
+    vector.set(1, 2);
+
+    expectVector(vector, 1, 2);
+  });
+
+  it('copy', () => {
+    const vector = new Vector(5, 4);
+
+    vector.copy({ x: 7, y: 8 });
+
+    expectVector(vector, 7, 8);
+  });
+
+  it('clone', () => {
+    const a = new Vector(5, 4);
+
+    const b = a.clone();
+
+    expectVector(b, 5, 4);
+    expect(a).toEqual(b);
+    expect(a).not.toBe(b);
+  });
+
   it('getLength', () => {
     const vector = new Vector(5, 4);
 
-    expect(vector.getLength()).toBeCloseTo(6.40312423, 5);
+    expect(vector.getLength()).toBeCloseTo(6.40312423, PRECISENESS);
+  });
+
+  it('getLengthSq', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getLengthSq()).toBe(41);
   });
 
   it('getAngle', () => {
     const vector = new Vector(5, 4);
 
-    expect(vector.getAngle()).toBeCloseTo(0.67474094, 5);
+    expect(vector.getAngle()).toBeCloseTo(0.67474094, PRECISENESS);
   });
 
   it('add', () => {
@@ -28,7 +58,7 @@ describe('Vector methods', () => {
 
     const returnValue = a.add(b);
 
-    expect(a).toEqual(v(11, 6));
+    expectVector(a, 11, 6);
     expect(returnValue).toBe(a);
   });
 
@@ -39,8 +69,26 @@ describe('Vector methods', () => {
 
     const returnValue = a.add(b, c);
 
-    expect(a).toEqual(v(8, 7));
+    expectVector(a, 8, 7);
     expect(returnValue).toBe(a);
+  });
+
+  it('setX', () => {
+    const vector = new Vector(1, 2);
+
+    const returnValue = vector.setX(5);
+
+    expectVector(vector, 5, 2);
+    expect(returnValue).toBe(vector);
+  });
+
+  it('setY', () => {
+    const vector = new Vector(1, 2);
+
+    const returnValue = vector.setY(5);
+
+    expectVector(vector, 1, 5);
+    expect(returnValue).toBe(vector);
   });
 
   it('addX', () => {
@@ -48,7 +96,7 @@ describe('Vector methods', () => {
 
     const returnValue = vector.addX(5);
 
-    expect(vector).toEqual(v(6, 2));
+    expectVector(vector, 6, 2);
     expect(returnValue).toBe(vector);
   });
 
@@ -57,7 +105,7 @@ describe('Vector methods', () => {
 
     const returnValue = vector.addY(5);
 
-    expect(vector).toEqual(v(1, 7));
+    expectVector(vector, 1, 7);
     expect(returnValue).toBe(vector);
   });
 
@@ -67,7 +115,7 @@ describe('Vector methods', () => {
 
     const returnValue = a.subtract(b);
 
-    expect(a).toEqual(v(-1, 2));
+    expectVector(a, -1, 2);
     expect(returnValue).toBe(a);
   });
 
@@ -78,7 +126,7 @@ describe('Vector methods', () => {
 
     const returnValue = a.subtract(b, c);
 
-    expect(a).toEqual(v(2, 1));
+    expectVector(a, 2, 1);
     expect(returnValue).toBe(a);
   });
 
@@ -87,7 +135,7 @@ describe('Vector methods', () => {
 
     const returnValue = vector.scale(5);
 
-    expect(vector).toEqual(v(5, 15));
+    expectVector(vector, 5, 15);
     expect(returnValue).toBe(vector);
   });
 
@@ -98,8 +146,8 @@ describe('Vector methods', () => {
 
     const returnValue = a.scaledAdd(multiplier, b);
 
-    expect(a).toEqual(v(7, 5));
-    expect(b).toEqual(v(3, 2));
+    expectVector(a, 7, 5);
+    expectVector(b, 3, 2);
     expect(returnValue).toBe(a);
   });
 
@@ -111,9 +159,9 @@ describe('Vector methods', () => {
 
     const returnValue = a.scaledAdd(multiplier, b, c);
 
-    vectorIs(a, 7, 7);
-    vectorIs(b, 1, 1);
-    vectorIs(c, 2, 2);
+    expectVector(a, 7, 7);
+    expectVector(b, 1, 1);
+    expectVector(c, 2, 2);
     expect(returnValue).toBe(a);
   });
 
@@ -122,7 +170,7 @@ describe('Vector methods', () => {
 
     vector.normalize();
 
-    vectorIs(vector, 0.894427190, 0.4472135);
+    expectVector(vector, 0.894427190, 0.4472135);
   })
 
   it('dot', () => {

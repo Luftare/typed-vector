@@ -25,40 +25,75 @@ const other = new Vector(); // x: 0, y: 0
 
 ### Methods
 
-#### [add(...IVector[]): Vector](#vector-v)
-Mutates self by adding other vector(s).
+#### [getLengthSq(): number](#get-length-sq)
+Gets the magnitude of the vector.
 `````ts
-const a = new Vector(1, 2);
-const b = new Vector(5, 5);
-a.add(b); // x: 6, y: 7
+new Vector(1, 2).getLengthSq(); // 5
 `````
 
 #### [getLength(): number](#get-length)
 Gets the magnitude of the vector.
 `````ts
-const vector = new Vector(5, 4);
-vector.getLength(); // 6.40312423
+new Vector(5, 4).getLength(); // 6.40312423
 `````
 
 #### [getAngle(): number](#get-angle)
 Gets the angle of the vector.
 `````ts
-const vector = new Vector(5, 4);
-vector.getAngle(); // 0.67474094
+new Vector(5, 4).getAngle(); // 0.67474094
 `````
 
-#### [addX(number): Vector](#addx)
+#### [set(number, number): Vector](#set)
+Mutates self by setting x and y values.
+`````ts
+new Vector(5, 4).set(2, 3); // { x: 2, y: 3 }
+`````
+
+#### [copy(IVector): Vector](#copy)
+Mutates self copying x and y from other vector-like.
+`````ts
+new Vector(5, 4).copy({ x: 2, y: 3 }); // { x: 2, y: 3 }
+`````
+
+#### [clone(): Vector](#clone)
+Creates a new Vector with identical values.
+`````ts
+const a = new Vector(5, 4);
+const b = a.clone();
+a === b; // false
+`````
+
+#### [add(...IVector[]): Vector](#vector-v)
+Mutates self by adding other vector(s).
+`````ts
+const a = new Vector(1, 2);
+const b = new Vector(5, 5);
+
+a.add(b); // x: 6, y: 7
+`````
+
+#### [setX(number): Vector](#set-x)
+Sets x.
+`````ts
+new Vector(2, 5).setX(1); // x: 1, y: 5
+`````
+
+#### [setY(number): Vector](#set-y)
+Sets y.
+`````ts
+new Vector(2, 5).addY(1); // x: 2, y: 1
+`````
+
+#### [addX(number): Vector](#add-x)
 Mutates self by adding x.
 `````ts
-const vector = new Vector(2, 5);
-vector.addX(1); // x: 3, y: 5
+new Vector(2, 5).addX(1); // x: 3, y: 5
 `````
 
-#### [addY(number): Vector](#addy)
+#### [addY(number): Vector](#add-y)
 Mutates self by adding y.
 `````ts
-const vector = new Vector(2, 5);
-vector.addY(1); // x: 2, y: 6
+new Vector(2, 5).addY(1); // x: 2, y: 6
 `````
 
 #### [subtract(...IVector[]): Vector](#subtract)
@@ -66,23 +101,23 @@ Mutates self by subtracting other vector(s).
 `````ts
 const a = new Vector(5, 4);
 const b = new Vector(3, 2);
+
 a.subtract(b); // x: 2, y: 2
 `````
 
 #### [scale(number): Vector](#scale)
 Mutates self by multiplying x and y.
 `````ts
-const vector = new Vector(1, 2);
-vector.scale(5); // x: 5, y: 10
+new Vector(1, 2).scale(5); // x: 5, y: 10
 `````
 
-#### [scaledAdd(number, ...IVector[]): Vector](#scaledadd)
+#### [scaledAdd(number, ...IVector[]): Vector](#scaled-add)
 Mutates self by adding other vector multiplied by given multiplier.
 `````ts
 const a = new Vector(1, 1);
 const b = new Vector(3, 3);
+
 a.scaledAdd(2, b); // x: 7, y: 7
-b; // x: 3, y: 3
 `````
 
 #### [dot(IVector): number](#dot)
@@ -90,6 +125,7 @@ A dot product of self and other vector.
 `````ts
 const a = new Vector(1, 2);
 const b = new Vector(3, 4);
+
 a.dot(b); // 11
 `````
 
@@ -98,5 +134,6 @@ A cross product of self and other vector.
 `````ts
 const a = new Vector(5, 3);
 const b = new Vector(2, 4);
+
 a.cross(b); // 14
 `````
