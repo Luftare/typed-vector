@@ -2,6 +2,17 @@
 
 It's a 2d vector library written in typescript.
 
+## How to use
+This module exports a `Vector` class and `IVector` interface.
+`````ts
+import { Vector, IVector } from 'typed-vector';
+
+const vector = new Vector(1, 2);
+const vectorLike: IVector = { x: 5, y: 8 };
+
+vector.add(vectorLike);
+`````
+
 ## API
 
 #### [IVector { x: number, y: number}](#interface)
@@ -20,6 +31,20 @@ Mutates self by adding other vector(s).
 const a = new Vector(1, 2);
 const b = new Vector(5, 5);
 a.add(b); // x: 6, y: 7
+`````
+
+#### [getLength(): number](#get-length)
+Gets the magnitude of the vector.
+`````ts
+const vector = new Vector(5, 4);
+vector.getLength(); // 6.40312423
+`````
+
+#### [getAngle(): number](#get-angle)
+Gets the angle of the vector.
+`````ts
+const vector = new Vector(5, 4);
+vector.getAngle(); // 0.67474094
 `````
 
 #### [addX(number): Vector](#addx)

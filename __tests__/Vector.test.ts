@@ -1,4 +1,4 @@
-import Vector from '../src/Vector';
+import { Vector } from '../src/Vector';
 
 describe('Vector', () => {
   it('Should exist', () => {

@@ -3,13 +3,21 @@ export interface IVector {
   y: number;
 }
 
-export default class Vector implements IVector {
+export class Vector implements IVector {
   public x: number = 0;
   public y: number = 0;
 
   constructor(x: number, y: number) {
     this.x = x;
     this.y = y;
+  }
+
+  public getLength(): number {
+    return (this.x ** 2 + this.y ** 2) ** 0.5;
+  }
+
+  public getAngle(): number {
+    return (this.x < 0 ? Math.PI : 0) + Math.atan(this.y / this.x);
   }
 
   public add(...vectors: IVector[]): Vector {
@@ -50,6 +58,15 @@ export default class Vector implements IVector {
       result.y += y * s;
       return result;
     }, this);
+  }
+
+  normalize(): Vector {
+    const length = this.getLength();
+    if (length === 0) {
+      return this;
+    } else {
+      return this.scale(1 / length);
+    }
   }
 
   public dot({ x, y }: IVector): number {

@@ -1,10 +1,27 @@
-import Vector from '../src/Vector';
+import { Vector, IVector } from '../src/Vector';
 
 function v(x: number, y: number): { x: number, y: number } {
   return { x, y };
 }
 
+function vectorIs(vector: IVector, x: number, y: number) {
+  expect(vector.x).toBeCloseTo(x, 5);
+  expect(vector.y).toBeCloseTo(y, 5);
+}
+
 describe('Vector methods', () => {
+  it('getLength', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getLength()).toBeCloseTo(6.40312423, 5);
+  });
+
+  it('getAngle', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getAngle()).toBeCloseTo(0.67474094, 5);
+  });
+
   it('add', () => {
     const a = new Vector(5, 4);
     const b = new Vector(6, 2);
@@ -94,11 +111,19 @@ describe('Vector methods', () => {
 
     const returnValue = a.scaledAdd(multiplier, b, c);
 
-    expect(a).toEqual(v(7, 7));
-    expect(b).toEqual(v(1, 1));
-    expect(c).toEqual(v(2, 2));
+    vectorIs(a, 7, 7);
+    vectorIs(b, 1, 1);
+    vectorIs(c, 2, 2);
     expect(returnValue).toBe(a);
   });
+
+  it('normalize', () => {
+    const vector = new Vector(10, 5);
+
+    vector.normalize();
+
+    vectorIs(vector, 0.894427190, 0.4472135);
+  })
 
   it('dot', () => {
     const a = new Vector(5, 3);
