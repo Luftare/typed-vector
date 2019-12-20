@@ -7,11 +7,6 @@ export class Vector implements IVector {
   public x: number = 0;
   public y: number = 0;
 
-  constructor(x: number, y: number) {
-    this.x = x;
-    this.y = y;
-  }
-
   static fromPolar(length: number, angle: number): Vector {
     return new Vector(length, 0).setAngle(angle);
   }
@@ -26,6 +21,11 @@ export class Vector implements IVector {
 
   static fromRandom() {
     return new Vector(1, 0).randomizeAngle();
+  }
+
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
   }
 
   public isEqual({ x, y }: IVector): boolean {
