@@ -202,6 +202,14 @@ describe('Vector methods', () => {
     expect(cross).toEqual(14);
   });
 
+  it('crossSign', () => {
+    expect(new Vector(1, 0).crossSign(new Vector(0, 1))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(1, 0))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(-1, 0))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(0, -1))).toBe(-1);
+    expect(new Vector(1, 0).crossSign(new Vector(-1, -0.01))).toBe(-1);
+  });
+
   it('rotate', () => {
     expectVector(new Vector(10, 0).rotate(Math.PI), -10, 0);
     expectVector(new Vector(10, 0).rotate(Math.PI / 2), 0, 10);
@@ -236,4 +244,26 @@ describe('Vector methods', () => {
     expect(new Vector(5, 4).isEqual(new Vector(4, 5))).toBe(false);
     expect(new Vector(5, 4).isEqual(new Vector(5, 4))).toBe(true);
   });
+
+  it('lerpAlignWith', () => {
+    const a = new Vector(10, 0);
+    const b = new Vector(0, 10);
+
+    a.lerpAlignWith(Math.PI * 0.25, b);
+
+    expectVector(a, 7.0710678, 7.0710678);
+  });
+
+  it('lerpAlignWith, opposite direction', () => {
+    const a = new Vector(-10, 0);
+    const b = new Vector(0, 10);
+
+    a.lerpAlignWith(Math.PI * 0.25, b);
+
+    expectVector(a, -7.0710678, 7.0710678);
+  });
+
+  it('mirror', () => {
+    expectVector(new Vector(5, 2).mirror(), -5, -2);
+  })
 });

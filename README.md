@@ -37,8 +37,15 @@ Creates a vector from polar coordinates. The angle is in radians.
 const a = Vector.fromPolar(10, Math.PI); // x: -10, y: 0
 `````
 
+#### [Vector.fromNormal(vector: IVector, CCW: boolean = false): Vector](#from-polar)
+Creates a vector from other vector's normal. CCW flag determines changes the direction of the normal (outside of inside).
+`````ts
+const a = Vector.fromNormal({ x: 5, y: 4 }); // x: 4, y: 5
+const a = Vector.fromNormal({ x: 5, y: 4 }, true); // x: -4, y: -5
+`````
+
 #### [Vector.fromRandom(): Vector](#from-random)
-Creates unit vector with random angle.
+Creates a unit vector with random angle.
 `````ts
 Vector.fromRandom();
 `````
@@ -100,6 +107,12 @@ Creates a new Vector with identical values.
 const a = new Vector(5, 4);
 const b = a.clone();
 a === b; // false
+`````
+
+#### [mirror(): Vector](#clone)
+Mirrors the vector.
+`````ts
+new Vector(5, 4).mirror(); // x: -5, y: -4
 `````
 
 #### [add(a: IVector [, b: IVector] [, c: IVector]): self](#add)
@@ -181,6 +194,15 @@ const a = new Vector(5, 3);
 const b = new Vector(2, 4);
 
 a.cross(b); // 14
+`````
+
+#### [crossSign(vector: IVector): number](#cross-sign)
+The sign of the cross product of self and other vector. Equal vector's sign is 1;
+`````ts
+const a = new Vector(1, 0);
+const b = new Vector(0, 1);
+
+a.crossSign(b); // 1
 `````
 
 #### [alignWith(vector: Vector): Vector](#align-with)

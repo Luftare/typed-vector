@@ -12,6 +12,10 @@ export class Vector implements IVector {
     return new Vector(x || 0, y || 0);
   }
 
+  public static fromNormal({ x, y }: IVector, CCW: boolean = false): Vector {
+    return new Vector(y, x).scale(CCW ? -1 : 1);
+  }
+
   public static distance(a: IVector, b: IVector): number {
     return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5;
   }
@@ -99,6 +103,10 @@ export class Vector implements IVector {
     return this;
   }
 
+  public mirror(): Vector {
+    return this.scale(-1);
+  }
+
   public subtract(...vectors: IVector[]): Vector {
     return vectors.reduce((result: Vector, { x, y }: IVector) => {
       result.x -= x;
@@ -161,5 +169,17 @@ export class Vector implements IVector {
   public randomizeAngle(maxRotation: number = Math.PI * 2): Vector {
     const rotation = (Math.random() - 0.5) * maxRotation;
     return this.rotate(rotation);
+  }
+
+  public crossSign(vector: Vector): number {
+    return this.cross(vector) >= 0 ? 1 : -1;
+  }
+
+  public lerpAlignWith(rotation: number, vector: Vector): Vector {
+    if (this.getAngle() === vector.getAngle()) return this;
+    const originalSign = this.crossSign(vector);
+    this.rotate(rotation * originalSign);
+    const newSign = this.crossSign(vector);
+    return originalSign !== newSign ? this.alignWith(vector) : this;
   }
 }

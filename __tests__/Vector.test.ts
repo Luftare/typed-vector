@@ -32,6 +32,13 @@ describe('Vector', () => {
     expectVector(Vector.fromRandom(), -0.2425992, 0.970126596);
   });
 
+  it('Can create vector from normal', () => {
+    const a = new Vector(5, 4);
+
+    expectVector(Vector.fromNormal(a), 4, 5);
+    expectVector(Vector.fromNormal(a, true), -4, -5);
+  });
+
   it('Can compute vector\'s distance', () => {
     const a = new Vector(5, 4);
     const b = new Vector(2, -6);
