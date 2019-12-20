@@ -4,19 +4,19 @@ export interface IVector {
 }
 
 export class Vector implements IVector {
-  static fromPolar(length: number, angle: number): Vector {
+  public static fromPolar(length: number, angle: number): Vector {
     return new Vector(length, 0).setAngle(angle);
   }
 
-  static fromArray([x, y]: number[]): Vector {
+  public static fromArray([x, y]: number[]): Vector {
     return new Vector(x || 0, y || 0);
   }
 
-  static distance(a: IVector, b: IVector): number {
+  public static distance(a: IVector, b: IVector): number {
     return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5;
   }
 
-  static fromRandom() {
+  public static fromRandom() {
     return new Vector(1, 0).randomizeAngle();
   }
 
