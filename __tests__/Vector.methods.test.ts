@@ -1,11 +1,9 @@
-import { Vector, IVector } from '../src/Vector';
+import { Vector } from '../src/Vector';
+import { expectVector, PRECISENESS } from './Vector.test';
 
-const PRECISENESS = 5;
-
-function expectVector(vector: IVector, x: number, y: number) {
-  expect(vector.x).toBeCloseTo(x, PRECISENESS);
-  expect(vector.y).toBeCloseTo(y, PRECISENESS);
-}
+const mockMath = Object.create(global.Math);
+mockMath.random = () => 0.789;
+global.Math = mockMath;
 
 describe('Vector methods', () => {
   it('set', () => {
@@ -40,6 +38,14 @@ describe('Vector methods', () => {
     expect(vector.getLength()).toBeCloseTo(6.40312423, PRECISENESS);
   });
 
+  it('setLength', () => {
+    const vector = new Vector(5, 4);
+
+    vector.setLength(100);
+
+    expectVector(vector, 78.08688, 62.469504);
+  });
+
   it('getLengthSq', () => {
     const vector = new Vector(5, 4);
 
@@ -50,6 +56,11 @@ describe('Vector methods', () => {
     const vector = new Vector(5, 4);
 
     expect(vector.getAngle()).toBeCloseTo(0.67474094, PRECISENESS);
+  });
+
+  it('setAngle', () => {
+    expectVector(new Vector(0, 10).setAngle(0), 10, 0);
+    expectVector(new Vector(3, 3).setAngle(0.3), 4.053149, 1.253786);
   });
 
   it('add', () => {
@@ -189,5 +200,40 @@ describe('Vector methods', () => {
     const cross = a.cross(b);
 
     expect(cross).toEqual(14);
+  });
+
+  it('rotate', () => {
+    expectVector(new Vector(10, 0).rotate(Math.PI), -10, 0);
+    expectVector(new Vector(10, 0).rotate(Math.PI / 2), 0, 10);
+    expectVector(new Vector(10, 0).rotate(-Math.PI / 2), 0, -10);
+    expectVector(new Vector(10, 0).rotate(Math.PI * 2), 10, 0);
+    expectVector(new Vector(3, 5).rotate(Math.PI * 3.1), -1.308084, -5.682333);
+  });
+
+  it('addLength', () => {
+    expectVector(new Vector(10, 0).addLength(5), 15, 0);
+    expectVector(new Vector(10, 0).addLength(-5), 5, 0);
+    expectVector(new Vector(7, 3).addLength(-11), 0, 0);
+    expectVector(new Vector(-3, 6).addLength(1), -3.447213, 6.894427);
+  });
+
+  it('alignWith', () => {
+    const a = new Vector(20, 4);
+    const b = new Vector(1, -30);
+
+    a.alignWith(b);
+
+    expectVector(a, 0.6794918, -20.3847563);
+  })
+
+  it('randomizeAngle', () => {
+    expectVector(new Vector(10, 0).randomizeAngle(), -2.42599, 9.70126596);
+    expectVector(new Vector(10, 0).randomizeAngle(0.3), 9.962439, 0.86591421);
+  });
+
+  it('isEqual', () => {
+    expect(new Vector(5, 4).isEqual(new Vector(3, 4))).toBe(false);
+    expect(new Vector(5, 4).isEqual(new Vector(4, 5))).toBe(false);
+    expect(new Vector(5, 4).isEqual(new Vector(5, 4))).toBe(true);
   });
 });
