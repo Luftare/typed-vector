@@ -176,7 +176,10 @@ export class Vector implements IVector {
   }
 
   public lerpAlignWith(rotation: number, vector: Vector): Vector {
-    if (this.getAngle() === vector.getAngle()) return this;
+    if (this.getAngle() === vector.getAngle()) {
+      return this;
+    }
+
     const originalSign = this.crossSign(vector);
     this.rotate(rotation * originalSign);
     const newSign = this.crossSign(vector);
