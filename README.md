@@ -1,6 +1,6 @@
 # typed-vector
 
-It's a 2d vector library written in typescript.
+It's a 2d vector library written in typescript. It includes lots of methods to simplify vector calculations in game development. It has zero dependencies and has unit tests.
 
 ## How to use
 This module exports a `Vector` class and `IVector` interface.
@@ -15,7 +15,10 @@ vector.add(vectorLike);
 
 ## API
 
-#### [IVector { x: number, y: number}](#interface)
+#### [IVector](#interface)
+`````ts
+const vectorLike: IVector = { x: 5, y: 8 };
+`````
 
 #### [Vector(x: number, y: number)](#vector-n-n)
 `````ts
