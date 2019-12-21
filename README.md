@@ -25,6 +25,24 @@ const b = new Vector(); // x: 0, y: 0
 
 ### Static methods
 
+#### [Vector.angleBetween(a: Vector, b: Vector): number](#angle-between)
+Computes the angle between vectors.
+`````ts
+const a = new Vector(-5, 4);
+const b = new Vector(1, 4);
+
+Vector.angleBetween(a, b); // 1.14103
+`````
+
+#### [Vector.angleBetweenSigned(a: Vector, b: Vector): number](#angle-between-signed)
+Computes the angle between vectors with a sign.
+`````ts
+const a = new Vector(-5, 4);
+const b = new Vector(1, 4);
+
+Vector.angleBetweenSigned(a, b); // -1.14103
+`````
+
 #### [Vector.distance(a: IVector, b: IVector): number](#static-distance)
 Computes the distance of two vector-likes.
 `````ts
@@ -37,11 +55,10 @@ Creates a vector from values provided as array.
 const a = Vector.fromArray([5, 6]); // x: 5, y: 6
 `````
 
-#### [Vector.fromNormal(vector: IVector, CCW: boolean = false): Vector](#from-polar)
-Creates a vector from other vector's normal. CCW flag determines changes the direction of the normal (outside of inside).
+#### [Vector.fromNormal(vector: IVector): Vector](#from-polar)
+Creates a vector from other vector's normal.
 `````ts
 Vector.fromNormal({ x: 5, y: 4 }); // x: 4, y: 5
-Vector.fromNormal({ x: 5, y: 4 }, true); // x: -4, y: -5
 `````
 
 #### [Vector.fromPolar(length: number, angle: number): Vector](#from-polar)
@@ -86,7 +103,7 @@ Mutates self by adding y.
 new Vector(2, 5).addY(1); // x: 2, y: 6
 `````
 
-#### [alignWith(vector: Vector): Vector](#align-with)
+#### [alignWith(vector: Vector): self](#align-with)
 Rotates the vector to be aligned with other vector.
 `````ts
 const a = new Vector(20, 4);
@@ -170,20 +187,20 @@ const b = Vector.fromPolar(10, 1.5);
 a.lerpAlignWidth(0.2, b).getAngle(); // 0.7
 `````
 
-#### [mirror(): Vector](#mirror)
+#### [mirror(): self](#mirror)
 Mirrors the vector.
 `````ts
 new Vector(5, 4).mirror(); // x: -5, y: -4
 `````
 
-#### [normalize(): Vector](#normalize)
+#### [normalize(): self](#normalize)
 Normalizes the vector i.e. sets the length to 1.
 `````ts
 new Vector(100, 53).normalize().getLength(); // 1
 `````
 
 
-#### [randomizeAngle(maxRotation?: number): Vector](#randomize-angle)
+#### [randomizeAngle(maxRotation?: number): self](#randomize-angle)
 Randomizes the angle. The max range of randomization from current angle can be provided as an argument.
 `````ts
 new Vector(20, 4).randomizeAngle();
@@ -201,7 +218,7 @@ Mutates self by multiplying x and y.
 new Vector(1, 2).scale(5); // x: 5, y: 10
 `````
 
-#### [scaledAdd(multiplier: number, ...vectors: IVector[]): Vector](#scaled-add)
+#### [scaledAdd(multiplier: number, ...vectors: IVector[]): self](#scaled-add)
 Mutates self by adding other vector multiplied by given multiplier.
 `````ts
 const a = new Vector(1, 1);
@@ -210,7 +227,7 @@ const b = new Vector(3, 3);
 a.scaledAdd(2, b); // x: 7, y: 7
 `````
 
-#### [set(x: number, y: number): Vector](#set)
+#### [set(x: number, y: number): self](#set)
 Mutates self by setting x and y values.
 `````ts
 new Vector(5, 4).set(2, 3); // x: 2, y: 3
@@ -240,11 +257,17 @@ Sets y.
 new Vector(2, 5).addY(1); // x: 2, y: 1
 `````
 
-#### [subtract(a: IVector [, b: IVector] [, c: IVector]): Veselfctor](#subtract)
+#### [subtract(a: IVector [, b: IVector] [, c: IVector]): self](#subtract)
 Mutates self by subtracting other vector(s).
 `````ts
 const a = new Vector(5, 4);
 const b = new Vector(3, 2);
 
 a.subtract(b); // x: 2, y: 2
+`````
+
+#### [zero(): self](#zero)
+Sets vector's length to 0.
+`````ts
+new Vector(5, 4).zero(); // x: 0, y: 0
 `````

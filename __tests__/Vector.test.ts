@@ -17,6 +17,27 @@ describe('Vector', () => {
     expectVector(new Vector(5, 4), 5, 4);
   });
 
+  it('Can compute vectors\' angle difference', () => {
+    const a = new Vector(-5, 4);
+    const b = new Vector(1, 4);
+
+    expect(Vector.angleBetween(a, b)).toBeCloseTo(1.14103404, PRECISENESS);
+  });
+
+  it('Can compute vectors\' angle difference, zero vector', () => {
+    const a = new Vector(5, 4);
+    const b = new Vector(0, 0);
+
+    expect(Vector.angleBetween(a, b)).toBeCloseTo(0, PRECISENESS);
+  });
+
+  it('Can compute vectors\' angle difference with sign', () => {
+    const a = new Vector(-5, 4);
+    const b = new Vector(1, 4);
+
+    expect(Vector.angleBetweenSigned(a, b)).toBeCloseTo(-1.14103404, PRECISENESS);
+  });
+
   it('Can compute vector\'s distance', () => {
     const a = new Vector(5, 4);
     const b = new Vector(2, -6);
@@ -33,9 +54,9 @@ describe('Vector', () => {
 
   it('Can create vector from normal', () => {
     const a = new Vector(5, 4);
+    const b = Vector.fromNormal(a);
 
-    expectVector(Vector.fromNormal(a), 4, 5);
-    expectVector(Vector.fromNormal(a, true), -4, -5);
+    expectVector(b, -4, 5);
   });
 
   it('Can be initiated from polar coordinates', () => {

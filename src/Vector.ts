@@ -4,6 +4,20 @@ export interface IVector {
 }
 
 export class Vector implements IVector {
+  public static angleBetween(a: Vector, b: Vector): number {
+    const lengthsProduct = a.getLength() * b.getLength();
+
+    if (lengthsProduct === 0) {
+      return 0;
+    }
+
+    return Math.acos(a.dot(b) / lengthsProduct);
+  }
+
+  public static angleBetweenSigned(a: Vector, b: Vector): number {
+    return Vector.angleBetween(a, b) * a.crossSign(b);
+  }
+
   public static distance(a: IVector, b: IVector): number {
     return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5;
   }
@@ -12,8 +26,8 @@ export class Vector implements IVector {
     return new Vector(x || 0, y || 0);
   }
 
-  public static fromNormal({ x, y }: IVector, CCW: boolean = false): Vector {
-    return new Vector(y, x).scale(CCW ? -1 : 1);
+  public static fromNormal({ x, y }: IVector): Vector {
+    return new Vector(-y, x);
   }
 
   public static fromPolar(length: number, angle: number): Vector {
@@ -184,5 +198,9 @@ export class Vector implements IVector {
       result.y -= y;
       return result;
     }, this);
+  }
+
+  public zero(): Vector {
+    return this.set(0, 0);
   }
 }

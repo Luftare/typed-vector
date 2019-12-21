@@ -266,4 +266,12 @@ describe('Vector methods', () => {
     expectVector(a, 2, 1);
     expect(returnValue).toBe(a);
   });
+
+  it('zero', () => {
+    const a = new Vector(5, 4);
+
+    a.zero();
+
+    expectVector(a, 0, 0);
+  })
 });
