@@ -17,9 +17,25 @@ describe('Vector', () => {
     expectVector(new Vector(5, 4), 5, 4);
   });
 
+  it('Can compute vector\'s distance', () => {
+    const a = new Vector(5, 4);
+    const b = new Vector(2, -6);
+
+    const distance = Vector.distance(a, b);
+
+    expect(distance).toBeCloseTo(10.440306, PRECISENESS);
+  });
+
   it('Can be initiated with an array', () => {
     expectVector(Vector.fromArray([1, 2]), 1, 2);
     expectVector(Vector.fromArray([]), 0, 0);
+  });
+
+  it('Can create vector from normal', () => {
+    const a = new Vector(5, 4);
+
+    expectVector(Vector.fromNormal(a), 4, 5);
+    expectVector(Vector.fromNormal(a, true), -4, -5);
   });
 
   it('Can be initiated from polar coordinates', () => {
@@ -30,21 +46,5 @@ describe('Vector', () => {
 
   it('Can create random vector', () => {
     expectVector(Vector.fromRandom(), -0.2425992, 0.970126596);
-  });
-
-  it('Can create vector from normal', () => {
-    const a = new Vector(5, 4);
-
-    expectVector(Vector.fromNormal(a), 4, 5);
-    expectVector(Vector.fromNormal(a, true), -4, -5);
-  });
-
-  it('Can compute vector\'s distance', () => {
-    const a = new Vector(5, 4);
-    const b = new Vector(2, -6);
-
-    const distance = Vector.distance(a, b);
-
-    expect(distance).toBeCloseTo(10.440306, PRECISENESS);
   });
 });

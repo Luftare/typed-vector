@@ -6,63 +6,6 @@ mockMath.random = () => 0.789;
 global.Math = mockMath;
 
 describe('Vector methods', () => {
-  it('set', () => {
-    const vector = new Vector(5, 4);
-
-    vector.set(1, 2);
-
-    expectVector(vector, 1, 2);
-  });
-
-  it('copy', () => {
-    const vector = new Vector(5, 4);
-
-    vector.copy({ x: 7, y: 8 });
-
-    expectVector(vector, 7, 8);
-  });
-
-  it('clone', () => {
-    const a = new Vector(5, 4);
-
-    const b = a.clone();
-
-    expectVector(b, 5, 4);
-    expect(a).toEqual(b);
-    expect(a).not.toBe(b);
-  });
-
-  it('getLength', () => {
-    const vector = new Vector(5, 4);
-
-    expect(vector.getLength()).toBeCloseTo(6.40312423, PRECISENESS);
-  });
-
-  it('setLength', () => {
-    const vector = new Vector(5, 4);
-
-    vector.setLength(100);
-
-    expectVector(vector, 78.08688, 62.469504);
-  });
-
-  it('getLengthSq', () => {
-    const vector = new Vector(5, 4);
-
-    expect(vector.getLengthSq()).toBe(41);
-  });
-
-  it('getAngle', () => {
-    const vector = new Vector(5, 4);
-
-    expect(vector.getAngle()).toBeCloseTo(0.67474094, PRECISENESS);
-  });
-
-  it('setAngle', () => {
-    expectVector(new Vector(0, 10).setAngle(0), 10, 0);
-    expectVector(new Vector(3, 3).setAngle(0.3), 4.053149, 1.253786);
-  });
-
   it('add', () => {
     const a = new Vector(5, 4);
     const b = new Vector(6, 2);
@@ -84,22 +27,11 @@ describe('Vector methods', () => {
     expect(returnValue).toBe(a);
   });
 
-  it('setX', () => {
-    const vector = new Vector(1, 2);
-
-    const returnValue = vector.setX(5);
-
-    expectVector(vector, 5, 2);
-    expect(returnValue).toBe(vector);
-  });
-
-  it('setY', () => {
-    const vector = new Vector(1, 2);
-
-    const returnValue = vector.setY(5);
-
-    expectVector(vector, 1, 5);
-    expect(returnValue).toBe(vector);
+  it('addLength', () => {
+    expectVector(new Vector(10, 0).addLength(5), 15, 0);
+    expectVector(new Vector(10, 0).addLength(-5), 5, 0);
+    expectVector(new Vector(7, 3).addLength(-11), 0, 0);
+    expectVector(new Vector(-3, 6).addLength(1), -3.447213, 6.894427);
   });
 
   it('addX', () => {
@@ -120,25 +52,124 @@ describe('Vector methods', () => {
     expect(returnValue).toBe(vector);
   });
 
-  it('subtract', () => {
-    const a = new Vector(5, 4);
-    const b = new Vector(6, 2);
+  it('alignWith', () => {
+    const a = new Vector(20, 4);
+    const b = new Vector(1, -30);
 
-    const returnValue = a.subtract(b);
+    a.alignWith(b);
 
-    expectVector(a, -1, 2);
-    expect(returnValue).toBe(a);
+    expectVector(a, 0.6794918, -20.3847563);
   });
 
-  it('subtract, multiple vectors', () => {
+  it('clone', () => {
     const a = new Vector(5, 4);
-    const b = new Vector(1, 1);
-    const c = new Vector(2, 2);
 
-    const returnValue = a.subtract(b, c);
+    const b = a.clone();
 
-    expectVector(a, 2, 1);
-    expect(returnValue).toBe(a);
+    expectVector(b, 5, 4);
+    expect(a).toEqual(b);
+    expect(a).not.toBe(b);
+  });
+
+  it('copy', () => {
+    const vector = new Vector(5, 4);
+
+    vector.copy({ x: 7, y: 8 });
+
+    expectVector(vector, 7, 8);
+  });
+
+  it('cross', () => {
+    const a = new Vector(5, 3);
+    const b = new Vector(2, 4);
+
+    const cross = a.cross(b);
+
+    expect(cross).toEqual(14);
+  });
+
+  it('crossSign', () => {
+    expect(new Vector(1, 0).crossSign(new Vector(0, 1))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(1, 0))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(-1, 0))).toBe(1);
+    expect(new Vector(1, 0).crossSign(new Vector(0, -1))).toBe(-1);
+    expect(new Vector(1, 0).crossSign(new Vector(-1, -0.01))).toBe(-1);
+  });
+
+  it('dot', () => {
+    const a = new Vector(5, 3);
+    const b = new Vector(2, 4);
+
+    const dot = a.dot(b);
+
+    expect(dot).toEqual(22);
+  });
+
+  it('getAngle', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getAngle()).toBeCloseTo(0.67474094, PRECISENESS);
+  });
+
+  it('getLength', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getLength()).toBeCloseTo(6.40312423, PRECISENESS);
+  });
+
+  it('getLengthSq', () => {
+    const vector = new Vector(5, 4);
+
+    expect(vector.getLengthSq()).toBe(41);
+  });
+
+  it('isEqual', () => {
+    expect(new Vector(5, 4).isEqual(new Vector(3, 4))).toBe(false);
+    expect(new Vector(5, 4).isEqual(new Vector(4, 5))).toBe(false);
+    expect(new Vector(5, 4).isEqual(new Vector(5, 4))).toBe(true);
+  });
+
+  it('lerpAlignWith', () => {
+    const a = new Vector(10, 0);
+    const b = new Vector(0, 10);
+
+    a.lerpAlignWith(Math.PI * 0.25, b);
+
+    expectVector(a, 7.0710678, 7.0710678);
+  });
+
+  it('lerpAlignWith, opposite direction', () => {
+    const a = new Vector(-10, 0);
+    const b = new Vector(0, 10);
+
+    a.lerpAlignWith(Math.PI * 0.25, b);
+
+    expectVector(a, -7.0710678, 7.0710678);
+  });
+
+  it('mirror', () => {
+    expectVector(new Vector(5, 2).mirror(), -5, -2);
+  });
+
+  it('normalize', () => {
+    const vector = new Vector(10, 5);
+
+    vector.normalize();
+
+    expectVector(vector, 0.894427190, 0.4472135);
+  });
+
+  it('randomizeAngle', () => {
+    expectVector(new Vector(10, 0).randomizeAngle(), -2.42599, 9.70126596);
+    expectVector(new Vector(10, 0).randomizeAngle(0.3), 9.962439, 0.86591421);
+  });
+
+  it('rotate', () => {
+    expectVector(new Vector(10, 0).rotate(Math.PI), -10, 0);
+    expectVector(new Vector(10, 0).rotate(Math.PI / 2), 0, 10);
+    expectVector(new Vector(10, 0).rotate(-Math.PI / 2), 0, -10);
+    expectVector(new Vector(10, 0).rotate(Math.PI * 2), 10, 0);
+    expectVector(new Vector(3, 5).rotate(Math.PI * 3.1), -1.308084, -5.682333);
   });
 
   it('scale', () => {
@@ -176,94 +207,63 @@ describe('Vector methods', () => {
     expect(returnValue).toBe(a);
   });
 
-  it('normalize', () => {
-    const vector = new Vector(10, 5);
+  it('set', () => {
+    const vector = new Vector(5, 4);
 
-    vector.normalize();
+    vector.set(1, 2);
 
-    expectVector(vector, 0.894427190, 0.4472135);
-  })
-
-  it('dot', () => {
-    const a = new Vector(5, 3);
-    const b = new Vector(2, 4);
-
-    const dot = a.dot(b);
-
-    expect(dot).toEqual(22);
+    expectVector(vector, 1, 2);
   });
 
-  it('cross', () => {
-    const a = new Vector(5, 3);
-    const b = new Vector(2, 4);
-
-    const cross = a.cross(b);
-
-    expect(cross).toEqual(14);
+  it('setAngle', () => {
+    expectVector(new Vector(0, 10).setAngle(0), 10, 0);
+    expectVector(new Vector(3, 3).setAngle(0.3), 4.053149, 1.253786);
   });
 
-  it('crossSign', () => {
-    expect(new Vector(1, 0).crossSign(new Vector(0, 1))).toBe(1);
-    expect(new Vector(1, 0).crossSign(new Vector(1, 0))).toBe(1);
-    expect(new Vector(1, 0).crossSign(new Vector(-1, 0))).toBe(1);
-    expect(new Vector(1, 0).crossSign(new Vector(0, -1))).toBe(-1);
-    expect(new Vector(1, 0).crossSign(new Vector(-1, -0.01))).toBe(-1);
+  it('setLength', () => {
+    const vector = new Vector(5, 4);
+
+    vector.setLength(100);
+
+    expectVector(vector, 78.08688, 62.469504);
   });
 
-  it('rotate', () => {
-    expectVector(new Vector(10, 0).rotate(Math.PI), -10, 0);
-    expectVector(new Vector(10, 0).rotate(Math.PI / 2), 0, 10);
-    expectVector(new Vector(10, 0).rotate(-Math.PI / 2), 0, -10);
-    expectVector(new Vector(10, 0).rotate(Math.PI * 2), 10, 0);
-    expectVector(new Vector(3, 5).rotate(Math.PI * 3.1), -1.308084, -5.682333);
+  it('setX', () => {
+    const vector = new Vector(1, 2);
+
+    const returnValue = vector.setX(5);
+
+    expectVector(vector, 5, 2);
+    expect(returnValue).toBe(vector);
   });
 
-  it('addLength', () => {
-    expectVector(new Vector(10, 0).addLength(5), 15, 0);
-    expectVector(new Vector(10, 0).addLength(-5), 5, 0);
-    expectVector(new Vector(7, 3).addLength(-11), 0, 0);
-    expectVector(new Vector(-3, 6).addLength(1), -3.447213, 6.894427);
+  it('setY', () => {
+    const vector = new Vector(1, 2);
+
+    const returnValue = vector.setY(5);
+
+    expectVector(vector, 1, 5);
+    expect(returnValue).toBe(vector);
   });
 
-  it('alignWith', () => {
-    const a = new Vector(20, 4);
-    const b = new Vector(1, -30);
+  it('subtract', () => {
+    const a = new Vector(5, 4);
+    const b = new Vector(6, 2);
 
-    a.alignWith(b);
+    const returnValue = a.subtract(b);
 
-    expectVector(a, 0.6794918, -20.3847563);
-  })
-
-  it('randomizeAngle', () => {
-    expectVector(new Vector(10, 0).randomizeAngle(), -2.42599, 9.70126596);
-    expectVector(new Vector(10, 0).randomizeAngle(0.3), 9.962439, 0.86591421);
+    expectVector(a, -1, 2);
+    expect(returnValue).toBe(a);
   });
 
-  it('isEqual', () => {
-    expect(new Vector(5, 4).isEqual(new Vector(3, 4))).toBe(false);
-    expect(new Vector(5, 4).isEqual(new Vector(4, 5))).toBe(false);
-    expect(new Vector(5, 4).isEqual(new Vector(5, 4))).toBe(true);
+  it('subtract, multiple vectors', () => {
+    const a = new Vector(5, 4);
+    const b = new Vector(1, 1);
+    const c = new Vector(2, 2);
+
+    const returnValue = a.subtract(b, c);
+
+    expectVector(a, 2, 1);
+    expect(returnValue).toBe(a);
   });
-
-  it('lerpAlignWith', () => {
-    const a = new Vector(10, 0);
-    const b = new Vector(0, 10);
-
-    a.lerpAlignWith(Math.PI * 0.25, b);
-
-    expectVector(a, 7.0710678, 7.0710678);
-  });
-
-  it('lerpAlignWith, opposite direction', () => {
-    const a = new Vector(-10, 0);
-    const b = new Vector(0, 10);
-
-    a.lerpAlignWith(Math.PI * 0.25, b);
-
-    expectVector(a, -7.0710678, 7.0710678);
-  });
-
-  it('mirror', () => {
-    expectVector(new Vector(5, 2).mirror(), -5, -2);
-  })
 });
