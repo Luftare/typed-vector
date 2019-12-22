@@ -153,16 +153,19 @@ const b = new Vector(1, -30);
 a.alignWith(b); // x: 0.67949, y: -20.384
 `````
 
-#### [clampAngle(angle: number, maxDiff: number): self](#clampLength)
+#### [clampAngle(angle: number, maxDiff: number): self](#clamp-angle)
 Clamps vectors angle to be within given diff. The diff is for both directions so `maxDiff` of `Math.PI` will effectively disable clamping effect.
 `````ts
-new Vector(2, 0).clamp(5, 10); // x: 5, y: 0
+new Vector(1, 0)
+  .rotate(0.2 + Math.PI * 2)
+  .clampAngle(0, 0.1)
+  .getAngle(); // 0.1
 `````
 
-#### [clampLength(a: number, b: number): self](#clampLength)
+#### [clampLength(a: number, b: number): self](#clamp-length)
 Clamps vectors length to be between min and max lengths. The boundaries can be set in any order e.g. (min, max) and (max, min).
 `````ts
-new Vector(2, 0).clamp(5, 10); // x: 5, y: 0
+new Vector(2, 0).clampLength(5, 10); // x: 5, y: 0
 `````
 
 #### [clone(): Vector](#clone)
