@@ -70,6 +70,12 @@ describe('Vector methods', () => {
     expectVector(new Vector(5, 0).applyMinLength(8), 8, 0);
   });
 
+  it('clampAngle', () => {
+    expect(new Vector(1, 0).rotate(0.2).clampAngle(0, 0.1).getAngle()).toBeCloseTo(0.1, PRECISENESS);
+    expect(new Vector(1, 0).rotate(0.2).clampAngle(0, 0.3).getAngle()).toBeCloseTo(0.2, PRECISENESS);
+    expect(new Vector(1, 0).rotate(0.2).clampAngle(Math.PI * 0.5, 0.1).getAngle()).toBeCloseTo(Math.PI * 0.5 - 0.1, PRECISENESS);
+  });
+
   it('clampLength', () => {
     expectVector(new Vector(100, 100).clampLength(5, 10), 7.0710678, 7.0710678)
     expectVector(new Vector(100, 100).clampLength(10, 5), 7.0710678, 7.0710678)

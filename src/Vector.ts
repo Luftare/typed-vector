@@ -108,6 +108,20 @@ export class Vector implements IVector {
     return this.setAngle(vector.getAngle());
   }
 
+  public clampAngle(angle: number, maxDiff: number) {
+    const limitedMaxDiff = Math.min(Math.PI, Math.abs(maxDiff));
+    const reference = Vector.fromPolar(1, angle);
+
+    const startDiff = Vector.angleBetween(this, reference);
+
+    if (startDiff > limitedMaxDiff) {
+      const originalVector = this.clone();
+      this.setAngle(angle).lerpAlignWith(limitedMaxDiff, originalVector);
+    }
+
+    return this;
+  }
+
   public clampLength(a: number, b: number): Vector {
     const length = this.getLength();
     const min = Math.min(a, b);
