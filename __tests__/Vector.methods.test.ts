@@ -58,7 +58,23 @@ describe('Vector methods', () => {
 
     a.alignWith(b);
 
-    expectVector(a, 0.6794918, -20.3847563);
+    expect(a.getAngle()).toBe(b.getAngle());
+  });
+
+  it('applyMaxLength', () => {
+    expectVector(new Vector(5, 0).applyMaxLength(2), 2, 0);
+    expectVector(new Vector(100, -100).applyMaxLength(10), 7.0710678, -7.0710678);
+  });
+
+  it('applyMinLength', () => {
+    expectVector(new Vector(5, 0).applyMinLength(8), 8, 0);
+  });
+
+  it('clampLength', () => {
+    expectVector(new Vector(100, 100).clampLength(5, 10), 7.0710678, 7.0710678)
+    expectVector(new Vector(100, 100).clampLength(10, 5), 7.0710678, 7.0710678)
+    expectVector(new Vector(0, 0).clampLength(2, 10), 0, 0);
+    expectVector(new Vector(0, 1).clampLength(5, 5), 0, 5);
   });
 
   it('clone', () => {

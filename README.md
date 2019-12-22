@@ -52,10 +52,48 @@ Computes the distance of two vector-likes.
 const a = Vector.distance({ x: -10, y: 0}, { x: 10, y: 0}); // 20
 `````
 
+#### [Vector.distanceSq(a: IVector, b: IVector): number](#static-distance-sq)
+Computes the squared distance of two vector-likes.
+`````ts
+const a = Vector.distanceSq({ x: -1, y: 0}, { x: 1, y: 0}); // 4
+`````
+
+#### [Vector.distanceToSegment(coordinate: Vector, segmentStart: Vector, segmentEnd: Vector): number](#static-distance-sq)
+Computes the distance of a coordinate to a segment defined by 2 coordinates.
+`````ts
+const segmentStart = new Vector(0, 0);
+const segmentEnd = new Vector(5, 0);
+const coordinate = new Vector(2, 7);
+
+Vector.distanceToSegment(coordinate, segmentStart, segmentEnd); // 7
+`````
+
+#### [Vector.distanceToSegmentSq(coordinate: Vector, segmentStart: Vector, segmentEnd: Vector): number](#static-distance-sq)
+Computes the squared distance of a coordinate to a segment defined by 2 coordinates.
+`````ts
+const segmentStart = new Vector(0, 0);
+const segmentEnd = new Vector(5, 0);
+const coordinate = new Vector(2, 7);
+
+Vector.distanceToSegmentSq(coordinate, segmentStart, segmentEnd); // 49
+`````
+
 #### [Vector.fromArray([number, number]): Vector](#from-array)
 Creates a vector from values provided as array.
 `````ts
 const a = Vector.fromArray([5, 6]); // x: 5, y: 6
+`````
+
+#### [Vector.fromCoordinate(vector: IVector): Vector](#from-coordinate)
+Creates a vector from a coordinate.
+`````ts
+Vector.fromCoordinate({ x: 4, y: 5 }); // x: 4, y: 5
+`````
+
+#### [Vector.fromCoordinates(start: IVector, end: IVector): Vector](#from-coordinates)
+Creates a vector from start and end coordinates.
+`````ts
+Vector.fromCoordinates({ x: 1, y: 1}, { x: 4, y: 5 }); // x: 3, y: 4
 `````
 
 #### [Vector.fromNormal(vector: IVector): Vector](#from-polar)
@@ -113,6 +151,12 @@ const a = new Vector(20, 4);
 const b = new Vector(1, -30);
 
 a.alignWith(b); // x: 0.67949, y: -20.384
+`````
+
+#### [clampLength(a: number, b: number): self](#clampLength)
+Clamps vectors length to be between min and max lengths. The boundaries can be set in any order e.g. (min, max) and (max, min).
+`````ts
+new Vector(2, 0).clamp(5, 10); // x: 5, y: 0
 `````
 
 #### [clone(): Vector](#clone)
@@ -188,6 +232,18 @@ const a = Vector.fromPolar(10, 0.5);
 const b = Vector.fromPolar(10, 1.5);
 
 a.lerpAlignWidth(0.2, b).getAngle(); // 0.7
+`````
+
+#### [applyMaxLength(maxLength: number): self](#apply-max-length)
+Limits the length of the vector.
+`````ts
+new Vector(-10, 0).applyMaxLength(2); // x: -2, y: 0
+`````
+
+#### [applyMinLength(minLength: number): self](#apply-min-length)
+Makes vector to be minimum of given length. Zero vector will be ignored.
+`````ts
+new Vector(-1, 0).applyMixLength(3); // x: -3, y: 0
 `````
 
 #### [mirror(): self](#mirror)

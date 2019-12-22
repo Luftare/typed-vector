@@ -19,11 +19,44 @@ export class Vector implements IVector {
   }
 
   public static distance(a: IVector, b: IVector): number {
-    return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5;
+    return Vector.distanceSq(a, b) ** 0.5;
+  }
+
+  public static distanceSq(a: IVector, b: IVector): number {
+    return ((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+  }
+
+  public static distanceToSegmentSq(coordinate: Vector, segmentStart: Vector, segmentEnd: Vector): number {
+    const segment = Vector.fromCoordinates(segmentStart, segmentEnd);
+    const segmentLengthSquared = segment.getLengthSq();
+
+    if (segmentLengthSquared === 0) {
+      return Vector.distanceSq(coordinate, segmentStart);
+    }
+
+    const segmentStartToCoordinate = Vector.fromCoordinates(segmentStart, coordinate);
+    const t = segmentStartToCoordinate.dot(segment) / segmentLengthSquared;
+    const clampedT = Math.max(0, Math.min(1, t));
+
+    const perpendicularPointAtSegment = segmentStart.scaledAdd(clampedT, segment);
+
+    return Vector.distanceSq(coordinate, perpendicularPointAtSegment);
+  }
+
+  public static distanceToSegment(coordinate: Vector, segmentStart: Vector, segmentEnd: Vector): number {
+    return Vector.distanceToSegmentSq(coordinate, segmentStart, segmentEnd) ** 0.5;
   }
 
   public static fromArray([x, y]: number[]): Vector {
     return new Vector(x || 0, y || 0);
+  }
+
+  public static fromCoordinate({ x, y }: IVector): Vector {
+    return new Vector(x, y);
+  }
+
+  public static fromCoordinates(start: IVector, end: IVector): Vector {
+    return Vector.fromCoordinate(end).subtract(start);
   }
 
   public static fromNormal({ x, y }: IVector): Vector {
@@ -73,6 +106,42 @@ export class Vector implements IVector {
 
   public alignWith(vector: Vector): Vector {
     return this.setAngle(vector.getAngle());
+  }
+
+  public clampLength(a: number, b: number): Vector {
+    const length = this.getLength();
+    const min = Math.min(a, b);
+    const max = Math.max(a, b);
+
+    if (length < min) {
+      return this.setLength(min);
+    }
+    if (length > max) {
+      return this.setLength(max);
+    }
+
+    return this;
+  }
+
+  public applyMinLength(minLength: number): Vector {
+    const length = this.getLength();
+
+    if (length < minLength) {
+      return this.setLength(minLength)
+    }
+
+    return this
+  }
+
+
+  public applyMaxLength(maxLength: number): Vector {
+    const length = this.getLength();
+
+    if (length > maxLength) {
+      return this.setLength(maxLength);
+    }
+
+    return this;
   }
 
   public clone(): Vector {

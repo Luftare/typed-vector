@@ -47,9 +47,46 @@ describe('Vector', () => {
     expect(distance).toBeCloseTo(10.440306, PRECISENESS);
   });
 
+  it('Can compute vector\'s squared distance', () => {
+    const a = new Vector(5, 4);
+    const b = new Vector(2, -6);
+
+    const distance = Vector.distanceSq(a, b);
+
+    expect(distance).toBe(109);
+  });
+
+  it('Can compute coordinate\'s distance to a segment', () => {
+    const segmentStart = new Vector(0, 0);
+    const segmentEnd = new Vector(5, 0);
+    const coordinate = new Vector(2, 7);
+
+    const distanceToSegment = Vector.distanceToSegment(coordinate, segmentStart, segmentEnd);
+
+    expect(distanceToSegment).toBe(7)
+  });
+
+  it('Can compute coordinate\'s squared distance to a segment', () => {
+    const segmentStart = new Vector(0, 0);
+    const segmentEnd = new Vector(5, 0);
+    const coordinate = new Vector(2, 7);
+
+    const distanceToSegment = Vector.distanceToSegmentSq(coordinate, segmentStart, segmentEnd);
+
+    expect(distanceToSegment).toBe(49)
+  });
+
   it('Can be initiated with an array', () => {
     expectVector(Vector.fromArray([1, 2]), 1, 2);
     expectVector(Vector.fromArray([]), 0, 0);
+  });
+
+  it('can create vector from coordinate', () => {
+    expectVector(Vector.fromCoordinate({ x: 5, y: -1 }), 5, -1);
+  });
+
+  it('can create vector from coordinates', () => {
+    expectVector(Vector.fromCoordinates({ x: 1, y: 0 }, { x: 5, y: -1 }), 4, -1);
   });
 
   it('Can create vector from normal', () => {
