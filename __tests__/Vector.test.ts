@@ -81,11 +81,11 @@ describe('Vector', () => {
     expectVector(Vector.fromArray([]), 0, 0);
   });
 
-  it('can create vector from coordinate', () => {
+  it('Can create vector from coordinate', () => {
     expectVector(Vector.fromCoordinate({ x: 5, y: -1 }), 5, -1);
   });
 
-  it('can create vector from coordinates', () => {
+  it('Can create vector from coordinates', () => {
     expectVector(Vector.fromCoordinates({ x: 1, y: 0 }, { x: 5, y: -1 }), 4, -1);
   });
 
