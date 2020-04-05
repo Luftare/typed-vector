@@ -13,6 +13,10 @@ export function expectVector(vector: IVector, x: number, y: number) {
 }
 
 describe('Vector', () => {
+  it('Defaults to zero vector', () => {
+    expectVector(new Vector(), 0, 0);
+  });
+
   it('Can be initialized with scalars', () => {
     expectVector(new Vector(5, 4), 5, 4);
   });
